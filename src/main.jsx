@@ -6,12 +6,26 @@ import './styles.css'
 
 const categories = ['全部工具', '常用工具', 'AI 绘图', '视频剪辑', '文案/提示词', '素材库', '配音', '运营数据', '办公协作', '设计资源', '去水印', '博主工具箱']
 const publicCategories = categories.slice(2)
-const logo = url => { try { return `${new URL(url).origin}/favicon.ico` } catch { return '' } }
+const localLogos = {
+  '微信': '/logos/wechat.png', 'WPS Office': '/logos/wps.png', '百度网盘': '/logos/baidu-pan.png', 'Google Chrome': '/logos/chrome.png', '360安全浏览器': '/logos/360.png', '夸克': '/logos/quark.png',
+  'Codex': '/logos/openai.png', 'Claude': '/logos/claude.ico', '豆包': '/logos/doubao.png', '剪映专业版': '/logos/capcut.png', '汽水音乐': '/logos/qishui.png', 'K-Lite Codec Pack': '/logos/klite.png',
+  'NanoPhoto': '/logos/nanophoto.ico', 'RunningHub': '/logos/runninghub.ico', 'AIGC 全模型': '/logos/aigc.ico', 'NextAICore': '/logos/nextaicore.ico', '飞哥工具箱': '/logos/feige.ico', '亮琪创作室': '/logos/liangqi.ico', 'AnyToCopy': '/logos/anytocopy.ico', '去水印工具': '/logos/kuku.ico',
+  'ima': '/logos/ima.png', '千问': '/logos/qwen.png', 'DeepSeek Harness': '/logos/deepseek.png', 'Grok Bot': '/logos/grok.png', 'Copilot': '/logos/copilot.png', 'MiniMax Design': '/logos/minimax.png',
+  '企业微信': '/logos/wecom.png', '钉钉': '/logos/dingtalk.png', '飞书': '/logos/feishu.png', '抖音开发者工具': '/logos/douyin-dev.ico', '微信开发者工具': '/logos/wechat-dev.ico', '小豆芽': '/logos/newrank.ico',
+  'Obsidian': '/logos/obsidian.png', 'Microsoft OneDrive': '/logos/onedrive.png', '迅雷': '/logos/xunlei.ico', 'Infatica': '/logos/infatica.png', 'IPdodo 互联': '/logos/ipdodo.ico'
+}
+const iconSources = tool => {
+  const sources = [localLogos[tool.name]]
+  try { sources.push(`${new URL(tool.url).origin}/favicon.ico`) } catch { /* use the text fallback */ }
+  return sources.filter(Boolean)
+}
 const phone = value => { const digits = value.replace(/\D/g, ''); return digits.startsWith('86') && digits.length === 13 ? `+${digits}` : digits.length === 11 ? `+86${digits}` : value.trim() }
 
 function ToolCard({ tool, favorite, onFavorite, onDelete, onCopy, canManage, privateCard = false }) {
-  const [broken, setBroken] = useState(false)
-  return <article className="tool-card"><a className="tool-link" href={tool.url} target="_blank" rel="noreferrer"><span className="tool-logo">{!broken && logo(tool.url) ? <img src={logo(tool.url)} alt="" onError={() => setBroken(true)} /> : tool.name.slice(0, 2)}</span><span className="tool-copy"><strong>{tool.name}<ArrowUpRight size={14} /></strong><small>{tool.description || '打开工具'}</small></span></a>
+  const sources = iconSources(tool); const [iconIndex, setIconIndex] = useState(0)
+  useEffect(() => setIconIndex(0), [tool.id, tool.name])
+  const source = sources[iconIndex]
+  return <article className="tool-card"><a className="tool-link" href={tool.url} target="_blank" rel="noreferrer"><span className="tool-logo">{source ? <img src={source} alt="" onError={() => setIconIndex(index => index + 1)} /> : tool.name.slice(0, 2)}</span><span className="tool-copy"><strong>{tool.name}<ArrowUpRight size={14} /></strong><small>{tool.description || '打开工具'}</small></span></a>
     {!privateCard && <button className={`icon-button favorite ${favorite ? 'is-favorite' : ''}`} onClick={() => onFavorite(tool)} title={favorite ? '取消收藏' : '收藏到常用工具'}><Heart size={17} fill={favorite ? 'currentColor' : 'none'} /></button>}
     {privateCard && <button className="icon-button" onClick={() => onCopy(tool)} title="复制到公开工具库"><CopyPlus size={17} /></button>}
     {canManage && <button className="icon-button danger" onClick={() => onDelete(tool)} title={`删除 ${tool.name}`}><X size={16} /></button>}

@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="非哥工具箱收录 AI 工具、效率软件、项目资源和素材合集，持续更新可领取的实用资源。"
+    />
+    <link rel="icon" type="image/png" sizes="256x256" href="./images/brand-avatar-favicon.png?v=20260423ip4" />
+    <link rel="apple-touch-icon" href="./images/brand-avatar-favicon.png?v=20260715" />
+    <title>非哥工具箱 - AI工具、效率软件与素材资源库</title>
+    <script type="module" crossorigin src="./assets/index-DTTB4uM-.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DAszK_oj.css">
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+</html>
+
