@@ -9,9 +9,9 @@ const publicCategories = categories.slice(2)
 const localLogos = {
   '微信': '/logos/wechat.png', 'WPS Office': '/logos/wps.png', '百度网盘': '/logos/baidu-pan.png', 'Google Chrome': '/logos/chrome.png', '360安全浏览器': '/logos/360.png', '夸克': '/logos/quark.png',
   'Codex': '/logos/openai.png', 'Claude': '/logos/claude.ico', '豆包': '/logos/doubao.png', '剪映专业版': '/logos/capcut.png', '汽水音乐': '/logos/qishui.png', 'K-Lite Codec Pack': '/logos/klite.png',
-  'NanoPhoto': '/logos/nanophoto.ico', 'RunningHub': '/logos/runninghub.ico', 'AIGC 全模型': '/logos/aigc.ico', 'NextAICore': '/logos/nextaicore.ico', '飞哥工具箱': '/logos/feige.ico', '亮琪创作室': '/logos/liangqi.ico', 'AnyToCopy': '/logos/anytocopy.ico', '去水印工具': '/logos/kuku.ico',
+  'NanoPhoto': '/logos/nanophoto.ico', 'RunningHub': '/logos/runninghub.ico', 'AIGC 全模型': '/logos/aigc.ico', 'NextAICore': '/logos/nextaicore.ico', '亮琪创作室': '/logos/liangqi.ico', 'AnyToCopy': '/logos/anytocopy.ico', '去水印工具': '/logos/kuku.ico',
   'ima': '/logos/ima.png', '千问': '/logos/qwen.png', 'DeepSeek Harness': '/logos/deepseek.png', 'Grok Bot': '/logos/grok.png', 'Copilot': '/logos/copilot.png', 'MiniMax Design': '/logos/minimax.png',
-  '企业微信': '/logos/wecom.png', '钉钉': '/logos/dingtalk.png', '飞书': '/logos/feishu.png', '抖音开发者工具': '/logos/douyin-dev.ico', '微信开发者工具': '/logos/wechat-dev.ico', '小豆芽': '/logos/newrank.ico',
+  '企业微信': '/logos/wecom.png', '钉钉': '/logos/dingtalk.png', '飞书': '/logos/feishu.png', '微信开发者工具': '/logos/wechat-dev.ico', '小豆芽': '/logos/newrank.ico',
   'Obsidian': '/logos/obsidian.png', 'Microsoft OneDrive': '/logos/onedrive.png', '迅雷': '/logos/xunlei.ico', 'Infatica': '/logos/infatica.png', 'IPdodo 互联': '/logos/ipdodo.ico'
 }
 const iconSources = tool => {
