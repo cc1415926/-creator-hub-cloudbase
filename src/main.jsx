@@ -52,10 +52,12 @@ const localLogos = {
   'mixkit': '/logos/mixkit.png', 'pexels': '/logos/pexels.png', 'pixabay': '/logos/pixabay.png', '知鱼素材': '/logos/zhiyu.png', '33台词': '/logos/33tc.png', '电影港': '/logos/dygangs.gif', '茶杯狐': '/logos/chabeihu.png', '预告片世界': '/logos/trailers.jpg',
   'CC0图片网': '/logos/cc0.png', 'KissCC0': '/logos/kisscc0.png', 'Unsplash': '/logos/unsplash.png', '歌曲宝': '/logos/gequbao.png', '淘声网': '/logos/tosound.ico', '网易云解锁': '/logos/ncm.png', '音乐搜索': '/logos/music-search.png', '音乐转换': '/logos/music-convert.png',
   'APP图标下载': '/logos/appicons.png', 'emoji表情': '/logos/emoji.webp', 'Iconfont': '/logos/iconfont.png', '色彩库': '/logos/color.png', '100font': '/logos/100font.ico', '搜字体': '/logos/souziti.png', 'ElevenLabs': '/logos/elevenlabs.ico', 'Minecho': '/logos/minecho.ico', 'SoundX': '/logos/soundx.ico',
-  '抖音开发者工具': '/logos/douyin-dev.ico', '飞哥工具箱': '/logos/feige.ico'
+  '抖音开发者工具': '/logos/douyin-dev.ico', '飞哥工具箱': '/logos/feige.png'
 }
 const iconSources = tool => {
-  const sources = [localLogos[tool.name]]
+  const localPath = localLogos[tool.name]
+  const localLogo = localPath ? `${import.meta.env.BASE_URL.replace(/\/$/, '')}${localPath}` : ''
+  const sources = [localLogo]
   try { sources.push(`${new URL(tool.url).origin}/favicon.ico`) } catch { /* use the text fallback */ }
   return sources.filter(Boolean)
 }
