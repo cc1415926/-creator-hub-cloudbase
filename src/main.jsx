@@ -26,7 +26,11 @@ const localLogos = {
   'NanoPhoto': '/logos/nanophoto.ico', 'RunningHub': '/logos/runninghub.ico', 'AIGC 全模型': '/logos/aigc.ico', 'NextAICore': '/logos/nextaicore.ico', '亮琪创作室': '/logos/liangqi.ico', 'AnyToCopy': '/logos/anytocopy.ico', '去水印工具': '/logos/kuku.ico',
   'ima': '/logos/ima.png', '千问': '/logos/qwen.png', 'DeepSeek Harness': '/logos/deepseek.png', 'Grok Bot': '/logos/grok.png', 'Copilot': '/logos/copilot.png', 'MiniMax Design': '/logos/minimax.png',
   '企业微信': '/logos/wecom.png', '钉钉': '/logos/dingtalk.png', '飞书': '/logos/feishu.png', '微信开发者工具': '/logos/wechat-dev.ico', '小豆芽': '/logos/newrank.ico',
-  'Obsidian': '/logos/obsidian.png', 'Microsoft OneDrive': '/logos/onedrive.png', '迅雷': '/logos/xunlei.ico', 'Infatica': '/logos/infatica.png', 'IPdodo 互联': '/logos/ipdodo.ico'
+  'Obsidian': '/logos/obsidian.png', 'Microsoft OneDrive': '/logos/onedrive.png', '迅雷': '/logos/xunlei.ico', 'Infatica': '/logos/infatica.png', 'IPdodo 互联': '/logos/ipdodo.ico', '爱加速': '/logos/ajiasu.png',
+  'mixkit': '/logos/mixkit.png', 'pexels': '/logos/pexels.png', 'pixabay': '/logos/pixabay.png', '知鱼素材': '/logos/zhiyu.png', '33台词': '/logos/33tc.png', '电影港': '/logos/dygangs.gif', '茶杯狐': '/logos/chabeihu.png', '预告片世界': '/logos/trailers.jpg',
+  'CC0图片网': '/logos/cc0.png', 'KissCC0': '/logos/kisscc0.png', 'Unsplash': '/logos/unsplash.png', '歌曲宝': '/logos/gequbao.png', '淘声网': '/logos/tosound.ico', '网易云解锁': '/logos/ncm.png', '音乐搜索': '/logos/music-search.png', '音乐转换': '/logos/music-convert.png',
+  'APP图标下载': '/logos/appicons.png', 'emoji表情': '/logos/emoji.webp', 'Iconfont': '/logos/iconfont.png', '色彩库': '/logos/color.png', '100font': '/logos/100font.ico', '搜字体': '/logos/souziti.png', 'ElevenLabs': '/logos/elevenlabs.ico', 'Minecho': '/logos/minecho.ico', 'SoundX': '/logos/soundx.ico',
+  '抖音开发者工具': '/logos/douyin-dev.ico', '飞哥工具箱': '/logos/feige.ico'
 }
 const iconSources = tool => {
   const sources = [localLogos[tool.name]]
