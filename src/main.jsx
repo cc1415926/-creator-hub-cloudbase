@@ -7,7 +7,7 @@ const categories = ['全部工具', '常用工具', 'AI 绘图', '视频剪辑',
 const FAVORITES_KEY = 'creator-hub-static-favorites-v1'
 const staticTools = [
   ['AI 绘图', '', 'NanoPhoto', 'https://nanophoto.ai/zh', '视频反推提示词'], ['AI 绘图', '', 'RunningHub', 'https://www.runninghub.cn/?utm_source=bingpinzhuan', 'AI 绘画工作流'], ['AI 绘图', '', 'AIGC 全模型', 'https://www.aigc.cn/#term-2494', '全模型集成网站'], ['AI 绘图', '', 'NextAICore', 'https://nextaicore.com/list/start', '全模型集成网站'],
-  ['去水印', '', 'AnyToCopy', 'https://www.anytocopy.com/', '多平台视频文案提取、视频与图片去水印'], ['去水印', '', '去水印工具', 'https://dy.kukutool.com/', '多平台无水印视频、图片解析下载'], ['博主工具箱', '', '飞哥工具箱', 'https://feige177.com/', '博主工具箱'], ['博主工具箱', '', '亮琪创作室', 'https://www.liangqi.net/cut', '剪辑与创作资源导航'],
+  ['去水印', '', 'AnyToCopy', 'https://www.anytocopy.com/', '多平台视频文案提取、视频与图片去水印'], ['去水印', '', '去水印工具', 'https://dy.kukutool.com/', '多平台无水印视频、图片解析下载'], ['博主工具箱', '', '飞哥工具箱', 'https://feige177.com/', '博主工具箱'], ['博主工具箱', '', '亮琪创作室', 'https://www.liangqi.net/cut', '剪辑与创作资源导航'], ['博主工具箱', '', '视频收件箱下载', 'https://pan.baidu.com/s/1thMqJcR8L-oU0B-n3zaylg?pwd=34at', '百度网盘分享 · 提取码：34at'],
   ['素材库', '视频素材', 'mixkit', 'https://mixkit.co/', '免费无限量视频素材，无需署名或注册'], ['素材库', '视频素材', 'pexels', 'https://www.pexels.com/zh-cn/', '免费图片和视频素材'], ['素材库', '视频素材', 'pixabay', 'https://pixabay.com/zh/', '视频、插画、摄影等无版权素材'], ['素材库', '视频素材', '知鱼素材', 'https://sucai.zhiyu.art/', '视频、图片、音乐与音效素材'],
   ['素材库', '电影资源', '33台词', 'https://33tc.net/', '通过台词查找影片素材'], ['素材库', '电影资源', '电影港', 'https://www.dygangs.net/', '高清电影资源'], ['素材库', '电影资源', '茶杯狐', 'https://www.bnjxjd.com/', '电影、电视剧、综艺与动漫资源'], ['素材库', '电影资源', '预告片世界', 'https://www.6huo.com/', '电影官方高清预告片与片段'],
   ['素材库', '图片素材', 'CC0图片网', 'https://cc0.cn/', '免费可商用图片素材'], ['素材库', '图片素材', 'KissCC0', 'https://www.kisspng.net/', '高清图与插画素材'], ['素材库', '图片素材', 'Unsplash', 'https://unsplash.com/', '高质量摄影图片素材'],
@@ -21,7 +21,7 @@ const staticTools = [
   ['办公协作', '网络与下载', '迅雷', 'https://www.xunlei.com/', '下载管理工具'], ['办公协作', '网络与下载', 'Infatica', 'https://infatica.io/', '网络代理服务'], ['办公协作', '网络与下载', 'IPdodo 互联', 'https://www.ipdodo.com/', '远程网络互联'], ['办公协作', '网络与下载', '爱加速', 'https://www.ajiasu.com/', '网络加速服务']
 ].map(([category, sub_category, name, url, description], index) => ({ id: String(index + 1), category, sub_category, name, url, description }))
 const localLogos = {
-  '微信': '/logos/wechat.png', 'WPS Office': '/logos/wps.png', '百度网盘': '/logos/baidu-pan.png', 'Google Chrome': '/logos/chrome.png', '360安全浏览器': '/logos/360.png', '夸克': '/logos/quark.png',
+  '微信': '/logos/wechat.png', 'WPS Office': '/logos/wps.png', '百度网盘': '/logos/baidu-pan.png', '视频收件箱下载': '/logos/baidu-pan.png', 'Google Chrome': '/logos/chrome.png', '360安全浏览器': '/logos/360.png', '夸克': '/logos/quark.png',
   'Codex': '/logos/openai.png', 'Claude': '/logos/claude.ico', '豆包': '/logos/doubao.png', '剪映专业版': '/logos/capcut.png', '汽水音乐': '/logos/qishui.png', 'K-Lite Codec Pack': '/logos/klite.png',
   'NanoPhoto': '/logos/nanophoto.ico', 'RunningHub': '/logos/runninghub.ico', 'AIGC 全模型': '/logos/aigc.ico', 'NextAICore': '/logos/nextaicore.ico', '亮琪创作室': '/logos/liangqi.ico', 'AnyToCopy': '/logos/anytocopy.ico', '去水印工具': '/logos/kuku.ico',
   'ima': '/logos/ima.png', '千问': '/logos/qwen.png', 'DeepSeek Harness': '/logos/deepseek.png', 'Grok Bot': '/logos/grok.png', 'Copilot': '/logos/copilot.png', 'MiniMax Design': '/logos/minimax.png',
