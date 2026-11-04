@@ -1,11 +1,19 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import { ArrowUpRight, Check, CheckCircle2, CircleUserRound, ClipboardList, CopyPlus, FolderCog, Heart, LockKeyhole, LogOut, Plus, Search, Send, ShieldCheck, Sparkles, X, XCircle } from 'lucide-react'
-import { auth, db } from './cloudbase'
+import { ArrowUpRight, Heart, Search, Sparkles } from 'lucide-react'
 import './styles.css'
 
 const categories = ['全部工具', '常用工具', 'AI 绘图', '视频剪辑', '文案/提示词', '素材库', '配音', '运营数据', '办公协作', '设计资源', '去水印', '博主工具箱']
-const publicCategories = categories.slice(2)
+const FAVORITES_KEY = 'creator-hub-static-favorites-v1'
+const staticTools = [
+  ['AI 绘图', '', 'NanoPhoto', 'https://nanophoto.ai/zh', '视频反推提示词'], ['AI 绘图', '', 'RunningHub', 'https://www.runninghub.cn/?utm_source=bingpinzhuan', 'AI 绘画工作流'], ['AI 绘图', '', 'AIGC 全模型', 'https://www.aigc.cn/#term-2494', '全模型集成网站'], ['AI 绘图', '', 'NextAICore', 'https://nextaicore.com/list/start', '全模型集成网站'],
+  ['去水印', '', 'AnyToCopy', 'https://www.anytocopy.com/', '多平台视频文案提取、视频与图片去水印'], ['去水印', '', '去水印工具', 'https://dy.kukutool.com/', '多平台无水印视频、图片解析下载'], ['博主工具箱', '', '飞哥工具箱', 'https://feige177.com/', '博主工具箱'], ['博主工具箱', '', '亮琪创作室', 'https://www.liangqi.net/cut', '剪辑与创作资源导航'],
+  ['办公协作', '沟通与办公', '微信', 'https://pc.weixin.qq.com/', '微信 PC 版官方下载'], ['办公协作', '沟通与办公', 'WPS Office', 'https://www.wps.cn/product/wps-office/', '文档、表格与演示办公套件'], ['办公协作', '沟通与办公', '企业微信', 'https://work.weixin.qq.com/', '企业沟通与协作'], ['办公协作', '沟通与办公', '钉钉', 'https://www.dingtalk.com/', '团队沟通与协作'], ['办公协作', '沟通与办公', '飞书', 'https://www.feishu.cn/', '团队协作与文档'], ['办公协作', '沟通与办公', 'Obsidian', 'https://obsidian.md/download', '本地知识库与笔记'],
+  ['办公协作', '云端与浏览器', '百度网盘', 'https://www.pan-baidu.com.cn/download.html', '文件同步与云端存储'], ['办公协作', '云端与浏览器', 'Google Chrome', 'https://www.google.com/chrome/', '网页浏览与账号同步'], ['办公协作', '云端与浏览器', '360安全浏览器', 'https://browser.360.cn/', '网页浏览器'], ['办公协作', '云端与浏览器', '夸克', 'https://pc.quark.cn/', '夸克电脑版浏览器'], ['办公协作', '云端与浏览器', 'Microsoft OneDrive', 'https://www.microsoft.com/microsoft-365/onedrive/download', '文件云同步'],
+  ['办公协作', 'AI 工作台', 'Codex', 'https://openai.com/codex/', 'AI 编程与任务协作'], ['办公协作', 'AI 工作台', 'Claude', 'https://claude.ai/download', 'Claude Desktop 官方下载'], ['办公协作', 'AI 工作台', '豆包', 'https://www.doubao.com/', 'AI 对话与创作助手'], ['办公协作', 'AI 工作台', 'ima', 'https://ima.qq.com/', '腾讯 AI 知识管理与问答'], ['办公协作', 'AI 工作台', '千问', 'https://tongyi.aliyun.com/', '阿里 AI 助手'], ['办公协作', 'AI 工作台', 'DeepSeek Harness', 'https://www.deepseek.com/', 'DeepSeek AI 助手'], ['办公协作', 'AI 工作台', 'Grok Bot', 'https://grok.com/', 'Grok AI 助手'], ['办公协作', 'AI 工作台', 'Copilot', 'https://copilot.microsoft.com/', 'Microsoft AI 助手'], ['办公协作', 'AI 工作台', 'MiniMax Design', 'https://www.minimaxi.com/', 'MiniMax AI 创作工具'],
+  ['办公协作', '创作与媒体', '剪映专业版', 'https://www.capcut.cn/download-guidance', '桌面视频剪辑'], ['办公协作', '创作与媒体', '汽水音乐', 'https://www.qishui.com/', '音乐播放与素材收听'], ['办公协作', '创作与媒体', 'K-Lite Codec Pack', 'https://codecguide.com/download_kl.htm', '视频编解码器安装包'], ['办公协作', '创作与媒体', '抖音开发者工具', 'https://developer.open-douyin.com/', '抖音小程序与小游戏开发'], ['办公协作', '创作与媒体', '微信开发者工具', 'https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html', '微信小程序开发'], ['办公协作', '创作与媒体', '小豆芽', 'https://www.newrank.cn/', '新媒体账号管理与运营'],
+  ['办公协作', '网络与下载', '迅雷', 'https://www.xunlei.com/', '下载管理工具'], ['办公协作', '网络与下载', 'Infatica', 'https://infatica.io/', '网络代理服务'], ['办公协作', '网络与下载', 'IPdodo 互联', 'https://www.ipdodo.com/', '远程网络互联'], ['办公协作', '网络与下载', '爱加速', 'https://www.ajiasu.com/', '网络加速服务']
+].map(([category, sub_category, name, url, description], index) => ({ id: String(index + 1), category, sub_category, name, url, description }))
 const localLogos = {
   '微信': '/logos/wechat.png', 'WPS Office': '/logos/wps.png', '百度网盘': '/logos/baidu-pan.png', 'Google Chrome': '/logos/chrome.png', '360安全浏览器': '/logos/360.png', '夸克': '/logos/quark.png',
   'Codex': '/logos/openai.png', 'Claude': '/logos/claude.ico', '豆包': '/logos/doubao.png', '剪映专业版': '/logos/capcut.png', '汽水音乐': '/logos/qishui.png', 'K-Lite Codec Pack': '/logos/klite.png',
@@ -55,7 +63,7 @@ function OfficeCards({ list, favoriteSet, toggleFavorite, admin, deleteFrom }) {
   return <div className="office-groups">{Object.entries(groups).map(([name, items]) => <section key={name} className="office-group"><h3>{name}</h3><Cards list={items} favoriteSet={favoriteSet} toggleFavorite={toggleFavorite} admin={admin} deleteFrom={deleteFrom} /></section>)}</div>
 }
 
-function App() {
+function LegacyApp() {
   const [session, setSession] = useState(null), [tools, setTools] = useState([]), [privateRows, setPrivateRows] = useState([]), [favorites, setFavorites] = useState([]), [submissions, setSubmissions] = useState([]), [role, setRole] = useState(null), [active, setActive] = useState('全部工具'), [query, setQuery] = useState(''), [authOpen, setAuthOpen] = useState(false), [entry, setEntry] = useState(null), [notice, setNotice] = useState('')
   const uid = session?.user?.id || session?.user?.sub || session?.user?.uid; const admin = role === 'admin'; const favoriteSet = new Set(favorites.map(x => x.tool_id))
   async function refresh() { const { data } = await auth.getSession(); const current = data?.session || null; setSession(current); if (!current) { setTools([]); setPrivateRows([]); setFavorites([]); setSubmissions([]); setRole(null); return } const results = await Promise.all([db.from('tools').select('*').order('category').order('sort_order').order('id'), db.from('user_roles').select('role').eq('uid', current.user.id), db.from('tool_favorites').select('tool_id'), db.from('private_resources').select('*').order('category').order('sort_order').order('id'), db.from('tool_submissions').select('*').order('created_at', { ascending: false })]); const [toolResult, roleResult, favoriteResult, privateResult, submissionResult] = results; for (const result of results) if (result.error) setNotice(result.error.message); setTools(toolResult.data || []); setRole(roleResult.data?.[0]?.role || 'member'); setFavorites(favoriteResult.data || []); setPrivateRows(privateResult.data || []); setSubmissions(submissionResult.data || []) }
@@ -74,4 +82,24 @@ function App() {
   <section className="review-panel"><header className="private-heading"><div><span className="eyebrow">ADMIN REVIEW</span><h2>工具审核</h2></div><span className="review-count"><ClipboardList size={16} /> {pending.length} 待审核</span></header>{pending.length ? <div className="review-list">{pending.map(x => <article className="review-row" key={x.id}><div><strong>{x.name}</strong><a href={x.url} target="_blank" rel="noreferrer">打开链接 <ArrowUpRight size={13} /></a><p>{x.category} · {x.description || '暂无说明'}</p></div><div className="review-actions"><button className="subtle approve" onClick={() => review(x, true)}><CheckCircle2 size={16} /> 通过并公开</button><button className="subtle reject" onClick={() => review(x, false)}><XCircle size={16} /> 拒绝</button></div></article>)}</div> : <div className="empty"><CheckCircle2 size={22} />暂无待审核推荐。</div>}</section></>}
   {notice && <div className="toast">{notice}<button onClick={() => setNotice('')}><X size={15} /></button></div>}</main>{authOpen && <AuthPanel close={() => setAuthOpen(false)} signedIn={refresh} />}{entry && <EntryForm mode={entry.mode} initial={entry.initial} ownerUid={uid} close={() => setEntry(null)} saved={refresh} />}</>
 }
+
+function loadFavorites() {
+  try { return JSON.parse(window.localStorage.getItem(FAVORITES_KEY) || '[]') } catch { return [] }
+}
+
+function App() {
+  const [active, setActive] = useState('全部工具'); const [query, setQuery] = useState(''); const [favorites, setFavorites] = useState(loadFavorites)
+  useEffect(() => { window.localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites)) }, [favorites])
+  const favoriteSet = new Set(favorites)
+  const visible = useMemo(() => staticTools.filter(tool => (active === '全部工具' || (active === '常用工具' ? favoriteSet.has(tool.id) : tool.category === active)) && [tool.name, tool.description, tool.category, tool.sub_category].join(' ').toLowerCase().includes(query.toLowerCase())), [active, query, favorites])
+  const grouped = useMemo(() => visible.reduce((all, tool) => { const key = active === '常用工具' ? '常用工具' : tool.category; return { ...all, [key]: [...(all[key] || []), tool] } }, {}), [visible, active])
+  const toggleFavorite = tool => setFavorites(current => current.includes(tool.id) ? current.filter(id => id !== tool.id) : [...current, tool.id])
+  return <><header className="topbar"><a className="brand" href="#top"><span className="brand-mark"><Sparkles size={19} /></span><span>创作基地</span></a><nav><a href="#tools">工具导航</a><a href="#about">使用说明</a></nav><div className="account"><span className="member">免登录 · 公开工具库</span></div></header>
+    <main id="top" className="shell"><section className="hero"><div><span className="eyebrow">TEAM CREATOR HUB</span><h1>把创作流程，<br />收进一张工作台。</h1><p>面向团队的 AI 内容工具导航。无需登录，打开即可检索、分类与跳转。</p></div><div className="hero-note"><Sparkles size={20} /><span>收藏保存在当前浏览器<br />不会上传任何个人信息</span></div><label className="searchbox"><Search size={20} /><input value={query} onChange={event => setQuery(event.target.value)} placeholder="搜索工具、用途或分类" /></label></section>
+      <section className="login-hint"><Heart size={18} /><span>点击工具卡可在新标签页打开；点击爱心将工具保存为这台设备的常用工具。</span></section>
+      <div className="workspace" id="tools"><aside className="sidebar"><span className="side-title">工具分类</span>{categories.map(category => <button key={category} className={active === category ? 'active' : ''} onClick={() => setActive(category)}>{category}{category === '常用工具' && favorites.length ? ` · ${favorites.length}` : ''}</button>)}</aside><section className="catalog">{Object.keys(grouped).length ? Object.entries(grouped).map(([category, list]) => <div className="category" key={category}><header><span></span><h2>{category}</h2><small>{list.length} 个</small></header>{category === '办公协作' ? <OfficeCards list={list} favoriteSet={favoriteSet} toggleFavorite={toggleFavorite} /> : <Cards list={list} favoriteSet={favoriteSet} toggleFavorite={toggleFavorite} />}</div>) : <div className="empty"><Heart size={22} />{active === '常用工具' ? '还没有本机收藏，点击工具卡右侧爱心即可加入。' : '没有找到匹配的工具'}</div>}</section></div>
+      <section id="about" className="private-zone"><div className="private-icon"><Sparkles size={20} /></div><div><span className="eyebrow">STATIC EDITION</span><h2>无需账号，也不收集个人信息</h2><p>此版本不依赖 CloudBase 数据库。公开工具可直接访问；常用收藏仅保存在你的浏览器中。</p></div><span className="private-state">静态公开版</span></section>
+    </main></>
+}
+
 createRoot(document.getElementById('root')).render(<App />)
